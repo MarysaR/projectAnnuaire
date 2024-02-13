@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+"""
+GESTION ANNUAIRE - 13/02/2024
+----------------------------------------------------
+3.1. ANNUAIRE_0 – CONDITIONS, BOUCLES, TUPLE ET DICT
+----------------------------------------------------
+
+@Marysa RÉGENT
+"""
+
+annuaire = {}
+LARGEUR = 60
+
+# Ajouter un contact
+def addContact():
+    nom = input("Nom : ")
+    prenom = input("Prenom : ")
+    cle = (nom + prenom).upper()
+    annuaire[cle] = {'Nom': nom, 'Prenom': prenom}
+    print(f"Contact ajouté pour {prenom} {nom}.")
+
+def displayContact():
+    if not annuaire:
+        print("Il n'y a pas de contacts enregistrés !")
+    else:
+        for nom, prenom in annuaire.values():
+            print(f"Nom : {nom}, Prenom : {prenom}")
+
+while True:
+    print("=" * LARGEUR)
+    print("Menu:".center(LARGEUR))
+    print("=" * LARGEUR)
+    print("1. Ajouter un nouveau contact")
+    print("2. Afficher les contacts")
+    print("3. Quitter l'application")
+    print("=" * LARGEUR)
+
+    choix = input("Choisissez une option (1, 2 ou 3) : ")
+
+    if choix == '1':
+        addContact()
+    elif choix == '2':
+       displayContact()
+    elif choix == '3':
+        print("Application quittée ")
+        break
+    else:
+        print("Option non valide. Veuillez choisir 1, 2, ou 3.")

@@ -24,3 +24,4 @@ def displayContact(annuaire):
     else:
         for nom, prenom in annuaire.values():
             print(f"Nom : {nom}, Prenom : {prenom}")
+

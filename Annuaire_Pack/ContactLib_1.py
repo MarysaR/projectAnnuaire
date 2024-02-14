@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+"""
+GESTION ANNUAIRE - 13/02/2024
+----------------------------------------------------
+3.2. ANNUAIRE_1 – FONCTIONS, MODULES, PACKAGES
+----------------------------------------------------
+
+@Marysa RÉGENT
+"""
+
+# Ajouter un contact
+def addContact(annuaire):
+    nom = input("Nom : ")
+    prenom = input("Prenom : ")
+    telephone = input("Téléphone : ")
+    email = input("Email : ")
+    cle_contact = nom.upper() + prenom.upper()
+
+    annuaire[cle_contact] = (nom, prenom, telephone, email)
+    print("Nouveau contact ajouté avec succès !")
+
+def displayContact(annuaire):
+    if annuaire:
+        print("\nListe des contacts :")
+        print("-" * 60)
+        print("|" + "|".join(["Nom".ljust(16), "Prénom".ljust(16), "Téléphone".rjust(12), "Email".rjust(11)]) + "|")
+        print("-" * 60)
+        for nom, prenom, telephone, email in annuaire.values():
+            print("|" + "|".join([nom.ljust(16), prenom.ljust(16), telephone.rjust(12), email.rjust(11)]) + "|")
+        print("-" * 60)
+    else:
+        print("Il n'y a pas de contacts enregistrés ! ")
+
+def verifCle(annuaire):
+    cle = input("Entrer la clé du contact à supprimer : ")
+    cle = cle.upper()
+    contact = annuaire.get(cle, None)
+    return cle, contact is not None
+
+def modifyContact(annuaire):
+    cle, trouve = verifCle(annuaire)
+    if not trouve:
+        print("Il n'y a aucun contact à modifier")
+    else:
+        nom, prenom, telephone, email = annuaire[cle]
+        print("Entrer le champ à modifier 1: nom, 2: prénom, 3: téléphone, 4: email")
+        choix = input("Entrer le numéro du champ à modifier : ")
+        maj = input("Entrer la nouvelle valeur : ")
+
+        match choix:
+            case "1":
+                nouvelle_cle = maj.upper() + prenom.upper()
+                annuaire[nouvelle_cle] = (maj, prenom, telephone, email)
+                print(f"Ajout d'un nouveau nom pour le contact {prenom} {nom} ")
+            case "2":
+                nouvelle_cle = nom.upper() + maj.upper()
+                annuaire[nouvelle_cle] = (nom, maj, telephone, email)
+                print("Ajout d'un nouveau contact ")
+            case "3":
+                annuaire[cle] = (nom, prenom, maj, email)
+                print(f"Modification du télephone pour {prenom} {nom}")
+            case "4":
+                annuaire[cle] = (nom, prenom, telephone, maj)
+                print(f"Modification de l'email pour {prenom} {nom}")
+            case _:
+                print("Choix invalide ! Veuillez réessayer.")
+
+
+def supprimerContact(annuaire):
+    cle, trouve = verifCle(annuaire)
+    if trouve:
+        del annuaire[cle]
+        print(f"Vous avez supprimé  {cle} de l'annuaire ! ")
+    else:
+        print(f"Aucune correspondance pour {cle}.")
+
+
+
+

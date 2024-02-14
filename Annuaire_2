@@ -4,15 +4,16 @@
 """
 GESTION ANNUAIRE - 13/02/2024
 ----------------------------------------------------
-3.1. ANNUAIRE_0 – CONDITIONS, BOUCLES, TUPLE ET DICT
+3.3. ANNUAIRE_2 – FICHIER, SERIALISATION
 ----------------------------------------------------
 
 @Marysa RÉGENT
 """
 
-from Annuaire_Pack.ContactLib import *
+from Annuaire_Pack import ContactLib_1
+import shelve
 
-annuaire = {}
+annuaire = shelve.open("Annuaire.dat")
 LARGEUR = 60
 
 while True:
@@ -24,13 +25,18 @@ while True:
     print("3. Quitter l'application")
     print("=" * LARGEUR)
 
-    choix = input("Choisissez une option (1, 2 ou 3) : ")
+    choix = input("Choisissez une option parmi les choix 1, 2 ou 3) : ")
 
     if choix == '1':
-        addContact(annuaire)
+        ContactLib_1.addContact(annuaire)
     elif choix == '2':
-        displayContact(annuaire)
+       ContactLib_1.displayContact(annuaire)
     elif choix == '3':
+        ContactLib_1.modifyContact(annuaire)
+    elif choix == '4':
+        ContactLib_1.deletedContact(annuaire)
+    elif choix == '5':
+        annuaire.close()
         print("Application quittée ")
         break
     else:

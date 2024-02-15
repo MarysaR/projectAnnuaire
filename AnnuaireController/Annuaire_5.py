@@ -4,13 +4,12 @@
 """
 GESTION ANNUAIRE - 15/02/2024
 ----------------------------------------------------
-3.5. ANNUAIRE_4 – CONCEPTION OBJET, QUALITE DE CODE
+3.6.2. CREATION D’EXCEPTION DANS NOTRE GESTION D’ANNUAIRE
 ----------------------------------------------------
 
 @Marysa RÉGENT
 """
-from AnnuaireModele.AnnuaireLib import *
-from Annuaire_4clt import *
+from AnnuaireView.Annuaire_5clt import *
 
 annuaire = Annuaire("Annuaire")
 LARGEUR = 60
@@ -35,7 +34,7 @@ while True:
     elif choix == '3':
         modifiedContact(annuaire)
     elif choix == '4':
-        deleteContact(annuaire)
+        deletedContact(annuaire)
     elif choix == '5':
         annuaire.close()
         print("Merci d'avoir utilisé l'application, au revoir !")

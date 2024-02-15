@@ -10,6 +10,7 @@ GESTION ANNUAIRE - 15/02/2024
 @Marysa RÉGENT
 """
 import shelve
+import re
 
 #Gestion des erreurs @classe AnnuaireException
 class AnnuaireException(Exception):
@@ -26,6 +27,28 @@ class Personne:
         self.email = email
     def __str__(self):
         return f"Prenom : {self.prenom}, Nom : {self.nom}, \nTéléphone: {self.telephone}, \nEmail: {self.email}"
+
+    @staticmethod
+    def validetelephone(tel):
+        if tel is None:
+            return None
+
+        pattern = re.compile(r'^(\+\d{1,3}\s?)?(\d{1,}\s?)*$')
+        if pattern.match(tel):
+            return True
+        else:
+            raise AnnuaireException("Numéro de téléphone invalide. Veuillez saisir un numéro au format valide.")
+
+    @staticmethod
+    def validemail(mel):
+        if mel is None:
+            return None
+
+        pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        if pattern.match(mel):
+            return True
+        else:
+            raise AnnuaireException("Adresse email invalide. Veuillez saisir une adresse email au format valide.")
 
 # @class Annuaire
 class Annuaire:
@@ -47,8 +70,10 @@ class Annuaire:
     def addedContact(self, pers):
         try:
             self.validecle(pers.nom, pers.prenom)
+            Personne.validetelephone(pers.telephone)
+            Personne.validemail(pers.email)
             cle_contact = pers.nom.upper() + pers.prenom.upper()
-            self.save_annuaire[cle_contact] = pers
+            self.contacts[cle_contact] = pers
         except AnnuaireException as e:
             print(f"Erreur lors de l'ajout du contact: {e.message}")
 
@@ -67,6 +92,8 @@ class Annuaire:
     def modifiedContact(self, contact):
         try:
             self.validecle(contact.nom, contact.prenom)
+            Personne.validetelephone(contact.telephone)
+            Personne.validemail(contact.email)
             cle, trouve = self.verifCle(contact.nom.upper() + contact.prenom.upper())
             if not trouve:
                 return False

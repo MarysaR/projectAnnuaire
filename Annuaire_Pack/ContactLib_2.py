@@ -9,7 +9,6 @@ GESTION ANNUAIRE - 13/02/2024
 
 @Marysa RÉGENT
 """
-import shelve
 
 class Personne:
     def __init__(self, nom, prenom, telephone, email):
@@ -19,7 +18,7 @@ class Personne:
         self.email = email
 
     def __str__(self):
-        return f"{self.prenom} {self.nom}\nTéléphone: {self.telephone}\nEmail: {self.email}"
+        return f"Prenom : {self.prenom}, Nom : {self.nom}, \nTéléphone: {self.telephone}, \nEmail: {self.email}"
 
 # Tester la classe dans l'interpréteur
 if __name__ == "__main__":
@@ -34,7 +33,7 @@ def addContact(annuaire):
     email = input("Email : ")
     cle_contact = nom.upper() + prenom.upper()
 
-    annuaire[cle_contact] = (nom, prenom, telephone, email)
+    annuaire[cle_contact] = Personne(nom, prenom, telephone, email)
     print("Nouveau contact ajouté avec succès !")
 
 def displayContact(annuaire):
@@ -43,8 +42,8 @@ def displayContact(annuaire):
         print("-" * 60)
         print("|" + "|".join(["Nom".ljust(16), "Prénom".ljust(16), "Téléphone".rjust(12), "Email".rjust(11)]) + "|")
         print("-" * 60)
-        for nom, prenom, telephone, email in annuaire.values():
-            print("|" + "|".join([nom.ljust(16), prenom.ljust(16), telephone.rjust(12), email.rjust(11)]) + "|")
+        for p in annuaire.values():
+            print("|" + "|".join([p.nom.ljust(16), p.prenom.ljust(16), p.telephone.rjust(12), p.email.rjust(11)]) + "|")
         print("-" * 60)
     else:
         print("Il n'y a pas de contacts enregistrés ! ")
@@ -68,23 +67,22 @@ def modifyContact(annuaire):
         match choix:
             case "1":
                 nouvelle_cle = maj.upper() + prenom.upper()
-                annuaire[nouvelle_cle] = (maj, prenom, telephone, email)
+                annuaire[nouvelle_cle] = Personne(maj, prenom, telephone, email)
                 print(f"Ajout d'un nouveau nom pour le contact {prenom} {nom} ")
             case "2":
                 nouvelle_cle = nom.upper() + maj.upper()
-                annuaire[nouvelle_cle] = (nom, maj, telephone, email)
+                annuaire[nouvelle_cle] = Personne(nom, maj, telephone, email)
                 print("Ajout d'un nouveau contact ")
             case "3":
-                annuaire[cle] = (nom, prenom, maj, email)
+                annuaire[cle] = Personne(nom, prenom, maj, email)
                 print(f"Modification du télephone pour {prenom} {nom}")
             case "4":
-                annuaire[cle] = (nom, prenom, telephone, maj)
+                annuaire[cle] = Personne(nom, prenom, telephone, maj)
                 print(f"Modification de l'email pour {prenom} {nom}")
             case _:
                 print("Choix invalide ! Veuillez réessayer.")
 
-
-def supprimerContact(annuaire):
+def deletedContact(annuaire):
     cle, trouve = verifCle(annuaire)
     if trouve:
         del annuaire[cle]
